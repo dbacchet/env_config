@@ -1,0 +1,21 @@
+[alias]
+        co = checkout
+        ci = commit
+        st = status
+        br = branch
+[push]
+	default = simple
+[user]
+	email = dbacchet@teslamotors.com
+	name = Davide Bacchet
+[core]
+	excludesfile = /Users/dbacchet/.gitignore_global
+	editor = vim
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[diff]
+	tool = bc
