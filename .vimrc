@@ -38,14 +38,26 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+
+""""""""""
+" EDITOR "
+""""""""""
+
 " do not create the fname~ backup
 set nobackup
+
+" tab insert 4 spaces
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
 
 " set autoindent
 " enable syntax highlighting and line numbers
 syntax enable
 set number
 set relativenumber
+set cursorline
 
 " color scheme
 set background=dark
@@ -67,10 +79,20 @@ colorscheme solarized
 " set ruler
 " incremental search
 set incsearch
+set hlsearch
 
 
 set clipboard=unnamed
 set nowrap
+
+" visual autocomplete fot command menu
+set wildmenu            
+
+" leader is comma
+let mapleader=","
+
+" jk is escape
+inoremap jk <esc>
 
 """"""""""
 " MOUSE  "
