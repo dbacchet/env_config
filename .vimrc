@@ -145,7 +145,7 @@ let g:multi_cursor_use_default_mapping=1
 " always show statusline
 set laststatus=2
 let g:airline_powerline_fonts = 1 
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 
 " Syntastic
 set statusline+=%#warningmsg#
