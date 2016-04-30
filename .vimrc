@@ -16,12 +16,16 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 " install other plugins
 Plugin 'The-NERD-tree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Solarized'
 Plugin 'bling/vim-airline'
 Plugin 'ctrlp.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'molokai'
-Plugin 'Syntastic'
+" Plugin 'Syntastic'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'keith/swift.vim'
+Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -94,13 +98,19 @@ let mapleader=","
 
 " jk is escape
 inoremap jk <esc>
-
+" use cmd-s to save
+nnoremap <M-s> :w<CR>  "Works in normal mode, must press Esc first"
+inoremap <M-s> <Esc>:w<CR>i "Works in insert mode, saves and puts back in insert mode"
 """"""""""
 " MOUSE  "
 """"""""""
 
 " enable mouse support in all modes
 set mouse=a
+if &term =~ '^screen'
+    " tmux knows the extended mouse mode
+    set ttymouse=xterm2
+endif
 
 " """""""" "
 " KEYBOARD "
@@ -109,6 +119,37 @@ set mouse=a
 set timeoutlen=100
 
 set backspace=indent,eol,start
+
+" """""""""""" "
+" TABS/BUFFERS "
+" """""""""""" "
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
+""""""""""""
+" QUICKFIX "
+""""""""""""
+map <F5> :make<CR><C-w><Up>
+map <F6> :cn<CR>
+map <F7> :cp<CR>
 
 """""""""""
 " PLUGINS "
@@ -122,7 +163,11 @@ set backspace=indent,eol,start
 " map <C-n> :NERDTreeToggle<CR>
 " " close if the only window left open is a NERDTree
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
+" ----- jistr/vim-nerdtree-tabs -----
+" Open/close NERDTree Tabs with \t
+nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
+" To have NERDTree always open on startup
+let g:nerdtree_tabs_open_on_console_startup = 0
 
 " CtrlP
 " map to ctrl-P
@@ -140,6 +185,7 @@ let g:multi_cursor_use_default_mapping=1
 " let g:multi_cursor_prev_key='<C-p>'
 " let g:multi_cursor_skip_key='<C-x>'
 " let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_start_key='<C-M>'
 
 " Airline
 " always show statusline
@@ -147,13 +193,17 @@ set laststatus=2
 let g:airline_powerline_fonts = 1 
 let g:airline#extensions#tabline#enabled = 1
 
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" " Syntastic
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" 
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_loc_list_height = 5
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" SuperTab
+let g:SuperTabDefaultCompletionType = "<c-n>"
 
