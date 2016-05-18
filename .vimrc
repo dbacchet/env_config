@@ -28,6 +28,10 @@ Plugin 'keith/swift.vim'
 Plugin 'ervandew/supertab'
 Plugin 'rking/ag.vim'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'matze/vim-move'
+Plugin 'majutsushi/tagbar'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -78,12 +82,16 @@ let g:solarized_style     =   "dark"
 let g:solarized_contrast  =   "normal"
 colorscheme solarized
 
+" disable Background Color Erase for xterm-like terminals (even inside tmux)
+:set t_ut=
+
 " current cursor position in lower right corner
 set ruler
 " incremental search
 set incsearch
 set hlsearch
-
+" hit CR in normal mode to clear the search highlights
+nnoremap <silent> <CR> :noh<CR><CR>
 
 set clipboard=unnamed
 
@@ -103,7 +111,6 @@ if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
-
 
 " """""""" "
 " KEYBOARD "
@@ -147,17 +154,17 @@ nmap <leader>l :bnext<CR>
 " Move to the previous buffer
 nmap <leader>h :bprevious<CR>
 " Close the current buffer and move to the previous one. This replicates the idea of closing a tab
-nmap <leader>bb :bp <BAR> bd #<CR>
+nnoremap <leader>bb :bp <BAR> bd #<CR>
 " Show all open buffers and their status
-nmap <leader>bl :ls<CR>
+nnoremap <leader>bl :ls<CR>
 
 
 """"""""""""
 " QUICKFIX "
 """"""""""""
 map <F5> :make<CR><C-w><Up>
-map <F6> :cn<CR>
-map <F7> :cp<CR>
+map <F4> :cn<CR>
+map <S-F4> :cp<CR>
 
 
 """""""""""
@@ -166,8 +173,9 @@ map <F7> :cp<CR>
 
 " NERDTree
 " ----- jistr/vim-nerdtree-tabs -----
-" Open/close NERDTree Tabs with \t
+" Open/close NERDTree Tabs with ,t or F7
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
+nmap <silent> <F7> :NERDTreeTabsToggle<CR>
 " To have NERDTree always open on startup
 let g:nerdtree_tabs_open_on_console_startup = 0
 
@@ -213,4 +221,18 @@ inoremap <C-_> <C-o>:call NERDComment(0,"toggle")<CR>
 nnoremap <leader>/ :call NERDComment(0,"toggle")<CR>
 vnoremap <leader>/ :call NERDComment(0,"toggle")<CR>gv
 inoremap <leader>/ <C-o>:call NERDComment(0,"toggle")<CR>
+
+" vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)"
+
+" TagBar
+nmap <F8> :TagbarToggle<CR>
+
+" remapping for the keys that are used with the Alt modifier on terminal vim
+" (editor must be configured to send Esc+key when Alt is pressed)
+set <A-j>=j
+set <A-k>=k
 
