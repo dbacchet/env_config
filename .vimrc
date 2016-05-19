@@ -17,13 +17,11 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'The-NERD-tree'
 Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'scrooloose/nerdcommenter'
 Plugin 'Solarized'
 Plugin 'bling/vim-airline'
 Plugin 'ctrlp.vim'
 Plugin 'terryma/vim-multiple-cursors'
-" Plugin 'molokai'
-" Plugin 'Syntastic'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'keith/swift.vim'
 Plugin 'ervandew/supertab'
 Plugin 'rking/ag.vim'
@@ -32,6 +30,9 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'matze/vim-move'
 Plugin 'majutsushi/tagbar'
+" Plugin 'Shougo/vimproc.vim'
+" Plugin 'Shougo/unite.vim'
+" Plugin 'Syntastic'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -72,14 +73,14 @@ set cursorline
 
 " color scheme
 set background=dark
-let g:solarized_termcolors=   256
-let g:solarized_termtrans =   0
-let g:solarized_degrade   =   0
-let g:solarized_bold      =   1
-let g:solarized_underline =   1
-let g:solarized_italic    =   0
-let g:solarized_style     =   "dark"
-let g:solarized_contrast  =   "normal"
+let g:solarized_termcolors = 256
+let g:solarized_termtrans  = 0
+let g:solarized_degrade    = 0
+let g:solarized_bold       = 1
+let g:solarized_underline  = 1
+let g:solarized_italic     = 0
+let g:solarized_style      = "dark"
+let g:solarized_contrast   = "normal"
 colorscheme solarized
 
 " disable Background Color Erase for xterm-like terminals (even inside tmux)
@@ -189,6 +190,9 @@ let g:ctrlp_working_path_mode = 'ra'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 
+" " Unite.vim
+" nnoremap <C-p> :Unite file_rec/async<CR>
+
 " vim-multiple-cursors
 let g:multi_cursor_use_default_mapping=1
 " let g:multi_cursor_start_key='<C-M>' " this will force a different keystroke to enter multi-cursor mode
@@ -213,14 +217,19 @@ let g:airline#extensions#tabline#enabled = 1
 " SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" NERDCommenter
-" map C-/ to toggle-comment
-nnoremap <C-_> :call NERDComment(0,"toggle")<CR>
-vnoremap <C-_> :call NERDComment(0,"toggle")<CR>gv
-inoremap <C-_> <C-o>:call NERDComment(0,"toggle")<CR>
-nnoremap <leader>/ :call NERDComment(0,"toggle")<CR>
-vnoremap <leader>/ :call NERDComment(0,"toggle")<CR>gv
-inoremap <leader>/ <C-o>:call NERDComment(0,"toggle")<CR>
+" " NERDCommenter
+" " map C-/ to toggle-comment
+" nnoremap <C-_> :call NERDComment(0,"toggle")<CR>
+" vnoremap <C-_> :call NERDComment(0,"toggle")<CR>gv
+" inoremap <C-_> <C-o>:call NERDComment(0,"toggle")<CR>
+" nnoremap <leader>/ :call NERDComment(0,"toggle")<CR>
+" vnoremap <leader>/ :call NERDComment(0,"toggle")<CR>gv
+" inoremap <leader>/ <C-o>:call NERDComment(0,"toggle")<CR>
+
+" tcomment
+" I need to find a better configuration to provide a more consistent approach
+nmap <leader>/ gc
+xmap <leader>/ gcgv
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
