@@ -182,13 +182,15 @@ let g:nerdtree_tabs_open_on_console_startup = 0
 
 " CtrlP
 " map to ctrl-P
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_map                = '<c-p>'
+let g:ctrlp_cmd                = 'CtrlP'
 " working dir mode (select as base the first parent containing .git, .svn, etc)
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode  = 'ra'
 " exclude files/foldeets
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore      = '\v[\/]\.(git|hg|svn)$'
+" recursive scan parameters
+let g:ctrlp_max_files          = 100000
 
 " " Unite.vim
 " nnoremap <C-p> :Unite file_rec/async<CR>
@@ -244,4 +246,17 @@ nmap <F8> :TagbarToggle<CR>
 " (editor must be configured to send Esc+key when Alt is pressed)
 set <A-j>=j
 set <A-k>=k
+
+" quick function for switching header/source, using ctags
+" tags must be generated using the following cmdline: ctags -R --extra=+f <DIR>
+function! SwitchSourceHeader()
+  "update!
+  if (expand ("%:e") == "cpp")
+    execute "tag " . expand("%:t:r") . ".h"
+  else 
+    execute "tag " . expand("%:t:r") . ".cpp"
+  endif
+endfunction
+
+nmap ,s :call SwitchSourceHeader()<CR>
 
