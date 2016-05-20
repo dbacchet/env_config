@@ -186,11 +186,19 @@ let g:ctrlp_map                = '<c-p>'
 let g:ctrlp_cmd                = 'CtrlP'
 " working dir mode (select as base the first parent containing .git, .svn, etc)
 let g:ctrlp_working_path_mode  = 'ra'
-" exclude files/foldeets
+" exclude files/folders (these are only effective when using the internal
+" globpath() file scanner, not with an external one like Ag)
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
 let g:ctrlp_custom_ignore      = '\v[\/]\.(git|hg|svn)$'
 " recursive scan parameters
 let g:ctrlp_max_files          = 100000
+" use Ag instead of grep and as scanner engine in CtrlP
+if executable("ag")
+    " Ag already ignores patterns in .gitignore; adding also *.o and cmake-generated .dir
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore "*.o" --ignore "*.dir" -g ""'
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
 
 " " Unite.vim
 " nnoremap <C-p> :Unite file_rec/async<CR>
@@ -260,18 +268,5 @@ endfunction
 
 nmap ,s :call SwitchSourceHeader()<CR>
 
-" use Ag instead of grep and as scanner engine in CtrlP
-if executable("ag")
-    let g:ackprg = 'ag --nogroup --nocolor --column'
-
-    " Use Ag over Grep
-    set grepprg=ag\ --nogroup\ --nocolor
-
-    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
-endif
 
 
