@@ -260,3 +260,18 @@ endfunction
 
 nmap ,s :call SwitchSourceHeader()<CR>
 
+" use Ag instead of grep and as scanner engine in CtrlP
+if executable("ag")
+    let g:ackprg = 'ag --nogroup --nocolor --column'
+
+    " Use Ag over Grep
+    set grepprg=ag\ --nogroup\ --nocolor
+
+    " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+endif
+
+
