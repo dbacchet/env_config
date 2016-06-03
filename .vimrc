@@ -154,10 +154,10 @@ if !has('nvim')
 endif
 
 " resize panes with C-S-<movement keys>
-nmap 7 :resize +2<CR>
-nmap 8 :resize -2<CR>
-nmap 9 :vertical resize +2<CR>
-nmap 0 :vertical resize -2<CR>
+nmap 6 :resize +2<CR>
+nmap 7 :resize -2<CR>
+nmap 8 :vertical resize +2<CR>
+nmap 9 :vertical resize -2<CR>
 
 " """"""""""""
 " TABS/BUFFERS "
