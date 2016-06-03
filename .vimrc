@@ -70,6 +70,8 @@ syntax enable
 set number
 set relativenumber
 set cursorline
+" color column at specified width
+set colorcolumn=120
 
 " color scheme
 set background=dark
@@ -124,6 +126,9 @@ set ttimeoutlen=10
 
 set backspace=indent,eol,start
 
+" semicolon to behave like :
+nnoremap ; :
+
 " leader is comma
 let mapleader=","
 
@@ -139,6 +144,20 @@ inoremap <C-s> <esc>:w<CR>i
 nnoremap <C-s> :w<CR>
 vnoremap <C-s> <esc>:w<CR>
 
+" remapping for the keys that are used with the Alt modifier on terminal vim
+" (editor must be configured to send Esc+key when Alt is pressed)
+if !has('nvim')
+    set <A-h>=h
+    set <A-j>=j
+    set <A-k>=k
+    set <A-l>=l
+endif
+
+" resize panes with C-S-<movement keys>
+nmap 7 :resize +2<CR>
+nmap 8 :resize -2<CR>
+nmap 9 :vertical resize +2<CR>
+nmap 0 :vertical resize -2<CR>
 
 " """"""""""""
 " TABS/BUFFERS "
@@ -152,8 +171,12 @@ set hidden
 nmap <leader>n :enew<cr>
 " Move to the next buffer
 nmap <leader>l :bnext<CR>
+nmap <A-l> :bnext<CR>
+imap <A-l> <ESC>:bnext<CR>
 " Move to the previous buffer
 nmap <leader>h :bprevious<CR>
+nmap <A-h> :bprevious<CR>
+imap <A-h> <ESC>:bprevious<CR>
 " Close the current buffer and move to the previous one. This replicates the idea of closing a tab
 nnoremap <leader>bb :bp <BAR> bd #<CR>
 " Show all open buffers and their status
@@ -250,11 +273,6 @@ nmap ga <Plug>(EasyAlign)"
 " TagBar
 nmap <F8> :TagbarToggle<CR>
 
-" remapping for the keys that are used with the Alt modifier on terminal vim
-" (editor must be configured to send Esc+key when Alt is pressed)
-set <A-j>=j
-set <A-k>=k
-
 " quick function for switching header/source, using ctags
 " tags must be generated using the following cmdline: ctags -R --extra=+f <DIR>
 function! SwitchSourceHeader()
@@ -267,6 +285,4 @@ function! SwitchSourceHeader()
 endfunction
 
 nmap ,s :call SwitchSourceHeader()<CR>
-
-
 
