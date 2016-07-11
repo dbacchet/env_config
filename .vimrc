@@ -30,8 +30,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'matze/vim-move'
 Plugin 'majutsushi/tagbar'
-" Plugin 'Shougo/vimproc.vim'
-" Plugin 'Shougo/unite.vim'
+Plugin 'rust-lang/rust.vim'
 " Plugin 'Syntastic'
 
 " All of your Plugins must be added before the following line
@@ -93,6 +92,9 @@ set ruler
 " incremental search
 set incsearch
 set hlsearch
+" smartcase when searching
+set ignorecase
+set smartcase
 " hit CR in normal mode to clear the search highlights
 nnoremap <silent> <CR> :noh<CR><CR>
 
@@ -187,6 +189,7 @@ nnoremap <leader>bl :ls<CR>
 " QUICKFIX "
 """"""""""""
 map <F5> :make<CR><C-w><Up>
+map <S-F5> :w <BAR> make<CR><C-w><Up>
 map <F4> :cn<CR>
 map <S-F4> :cp<CR>
 
@@ -246,18 +249,12 @@ let g:airline#extensions#tabline#enabled = 1
 " let g:syntastic_loc_list_height = 5
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
+" let g:syntastic_c_remove_include_errors = 1
+" let g:syntastic_cpp_remove_include_errors = 1
+" let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 " SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
-
-" " NERDCommenter
-" " map C-/ to toggle-comment
-" nnoremap <C-_> :call NERDComment(0,"toggle")<CR>
-" vnoremap <C-_> :call NERDComment(0,"toggle")<CR>gv
-" inoremap <C-_> <C-o>:call NERDComment(0,"toggle")<CR>
-" nnoremap <leader>/ :call NERDComment(0,"toggle")<CR>
-" vnoremap <leader>/ :call NERDComment(0,"toggle")<CR>gv
-" inoremap <leader>/ <C-o>:call NERDComment(0,"toggle")<CR>
 
 " tcomment
 " I need to find a better configuration to provide a more consistent approach
@@ -273,13 +270,18 @@ nmap ga <Plug>(EasyAlign)"
 " TagBar
 nmap <F8> :TagbarToggle<CR>
 
+
+" """""""""""""""""""" "
+" small customizations "
+" """""""""""""""""""" "
+
 " quick function for switching header/source, using ctags
 " tags must be generated using the following cmdline: ctags -R --extra=+f <DIR>
 function! SwitchSourceHeader()
   "update!
   if (expand ("%:e") == "cpp")
     execute "tag " . expand("%:t:r") . ".h"
-  else 
+  else
     execute "tag " . expand("%:t:r") . ".cpp"
   endif
 endfunction
