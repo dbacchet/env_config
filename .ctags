@@ -1,0 +1,8 @@
+--recurse=yes
+--links=no
+--extra=+f
+--exclude=.git
+--exclude=build/*
+--exclude=cbuild/*
+--exclude=docs/html/*
+
