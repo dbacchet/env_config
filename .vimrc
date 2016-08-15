@@ -32,6 +32,7 @@ Plugin 'matze/vim-move'
 Plugin 'majutsushi/tagbar'
 Plugin 'rust-lang/rust.vim'
 " Plugin 'Syntastic'
+Plugin 'tpope/vim-dispatch'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -85,7 +86,10 @@ let g:solarized_contrast   = "normal"
 colorscheme solarized
 
 " disable Background Color Erase for xterm-like terminals (even inside tmux)
-:set t_ut=
+set t_ut=
+" increase the scrolling performance by buffering movements
+set lazyredraw
+set ttyfast
 
 " current cursor position in lower right corner
 set ruler
@@ -183,6 +187,8 @@ imap <A-h> <ESC>:bprevious<CR>
 nnoremap <leader>bb :bp <BAR> bd #<CR>
 " Show all open buffers and their status
 nnoremap <leader>bl :ls<CR>
+" show current buffer in NERDTree
+nnoremap <leader>bf :NERDTreeFind<CR>
 
 
 """"""""""""
