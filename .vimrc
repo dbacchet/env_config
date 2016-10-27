@@ -23,16 +23,17 @@ Plugin 'ctrlp.vim'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'tomtom/tcomment_vim'
 Plugin 'keith/swift.vim'
-Plugin 'ervandew/supertab'
 Plugin 'rking/ag.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'matze/vim-move'
 Plugin 'majutsushi/tagbar'
-Plugin 'rust-lang/rust.vim'
+Plugin 'ervandew/supertab'
+Plugin 'neomake/neomake'
 " Plugin 'Syntastic'
-Plugin 'tpope/vim-dispatch'
+" Plugin 'tpope/vim-dispatch'
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -142,8 +143,13 @@ let mapleader=","
 inoremap jk <esc>
 inoremap kj <esc>
 
-" :W to save
+" :W to save and :Q to quit (common typos I make...)
 comman W w
+comman Q q
+
+" check for file chenges after 4s (checktime default val) of inactivity in normal mode
+set autoread
+" au CursorHold * checktime
 
 " Ctrl-S to save
 inoremap <C-s> <esc>:w<CR>i
@@ -159,11 +165,11 @@ if !has('nvim')
     set <A-l>=l
 endif
 
-" resize panes with C-S-<movement keys>
-nmap 6 :resize +2<CR>
-nmap 7 :resize -2<CR>
-nmap 8 :vertical resize +2<CR>
-nmap 9 :vertical resize -2<CR>
+" " resize panes with C-S-<movement keys>
+" nmap 6 :resize +2<CR>
+" nmap 7 :resize -2<CR>
+" nmap 8 :vertical resize +2<CR>
+" nmap 9 :vertical resize -2<CR>
 
 " """"""""""""
 " TABS/BUFFERS "
@@ -218,9 +224,8 @@ let g:ctrlp_map                = '<c-p>'
 let g:ctrlp_cmd                = 'CtrlP'
 " working dir mode (select as base the first parent containing .git, .svn, etc)
 let g:ctrlp_working_path_mode  = 'ra'
-" exclude files/folders (these are only effective when using the internal
-" globpath() file scanner, not with an external one like Ag)
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " Linux/MacOSX
+" exclude files/folders
+set wildignore+=*.so,*.swp,*.zip     " Linux/MacOSX
 let g:ctrlp_custom_ignore      = '\v[\/]\.(git|hg|svn)$'
 " recursive scan parameters
 let g:ctrlp_max_files          = 100000
@@ -244,20 +249,6 @@ let g:multi_cursor_use_default_mapping=1
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-
-" " Syntastic
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_loc_list_height = 5
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_c_remove_include_errors = 1
-" let g:syntastic_cpp_remove_include_errors = 1
-" let g:syntastic_cpp_compiler_options = '-std=c++11'
 
 " SuperTab
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -294,3 +285,9 @@ endfunction
 
 nmap ,s :call SwitchSourceHeader()<CR>
 
+" Removes trailing spaces
+function TrimWhiteSpace()
+    %s/\s*$//
+    ''
+endfunction
+map <F2> :call TrimWhiteSpace()<CR>
