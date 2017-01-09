@@ -31,6 +31,7 @@ Plugin 'matze/vim-move'
 Plugin 'majutsushi/tagbar'
 Plugin 'ervandew/supertab'
 Plugin 'neomake/neomake'
+Plugin 'dcharbon/vim-flatbuffers'
 " Plugin 'Syntastic'
 " Plugin 'tpope/vim-dispatch'
 
@@ -56,6 +57,13 @@ filetype plugin indent on    " required
 
 " do not create the fname~ backup
 set nobackup
+" place swap files in a common dir (double // at the end to avoid name collisions)
+if !isdirectory($HOME.'/.vim/swp')
+    call mkdir($HOME.'/.vim/swp', 'p')
+endif
+set directory=~/.vim/swp//
+" set backupdir=~/.vim/tmp/backup_files//
+" set undodir=~/.vim/tmp/undo_files//
 
 " tab insert 4 spaces
 set tabstop=4
@@ -66,6 +74,9 @@ set expandtab
 set nowrap
 
 " set autoindent
+" customize indentation for c/c++: [don't indent namespaces],[don't indent
+" scopes (public/protected/private)]
+set cino=N-s,g0
 " enable syntax highlighting and line numbers
 syntax enable
 set number
