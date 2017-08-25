@@ -15,6 +15,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 " other plugin
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
 Plugin 'The-NERD-tree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'Solarized'
@@ -32,6 +33,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'ervandew/supertab'
 Plugin 'neomake/neomake'
 Plugin 'dcharbon/vim-flatbuffers'
+Plugin 'rhysd/vim-clang-format'
 " Plugin 'Syntastic'
 " Plugin 'tpope/vim-dispatch'
 
@@ -278,6 +280,9 @@ nmap ga <Plug>(EasyAlign)"
 " TagBar
 nmap <F8> :TagbarToggle<CR>
 
+" custom filetype associations
+autocmd BufNewFile,BufRead *.nionet  set filetype=yaml
+autocmd BufNewFile,BufRead *.nnmsg   set filetype=yaml
 
 " """""""""""""""""""" "
 " small customizations "
