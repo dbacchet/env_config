@@ -12,6 +12,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AppleWindowTabbingMode</key>
+	<string>manual</string>
 	<key>CopyWithStylesByDefault</key>
 	<true/>
 	<key>Custom Color Presets</key>
@@ -229,6 +231,8 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>C3F69C65-D980-40F3-968B-872A8E1E1D1A</string>
+	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
 	<true/>
 	<key>NSNavLastRootDirectory</key>
@@ -267,17 +271,19 @@
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>388 363 620 392 0 0 1440 877 </string>
+	<string>389 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>172 150 1018 447 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 5 1396 867 0 0 1440 877 </string>
+	<string>-2546 -37 2464 1371 -2560 -83 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>500 10 850 867 0 0 1440 877 </string>
+	<string>-1624 467 850 867 -2560 -83 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>24 0 850 867 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>218 10 1165 867 0 0 1440 877 </string>
+	<string>218 10 850 867 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>239 1 850 867 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -973,8 +979,10 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2017-07-04T21:59:44Z</date>
+	<date>2017-09-25T00:27:36Z</date>
 	<key>SUSendProfileInfo</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
@@ -983,7 +991,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.15</string>
+	<string>3.1.2</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
