@@ -5,7 +5,7 @@ set-option -g prefix C-a
 bind-key C-a send-prefix
 
 # shell
-set -g default-command "reattach-to-user-namespace -l /bin/zsh"
+set -g default-command "/bin/zsh"
 set -g default-shell /bin/zsh
 
 # start with window 1 (instead of 0)
@@ -31,29 +31,26 @@ set -g status-keys vi
 # setw -g utf8 on
 
 # start selection, yank and paste like in vim
-# bind-key -t vi-copy 'v' begin-selection
-# bind-key -t vi-copy 'y' copy-selection
-# bind-key -t vi-copy 'r' rectangle-toggle
-# Setup 'v' to begin selection as in Vim
 bind-key -t vi-copy v begin-selection
-bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
-
-# Update default binding of `Enter` to also use copy-pipe
-unbind -t vi-copy Enter
-bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
-
-# Bind ']' to use pbpaste
-bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
+bind-key -t vi-copy y copy-selection
+# bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+#
+# # Update default binding of `Enter` to also use copy-pipe
+# unbind -t vi-copy Enter
+# bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+#
+# # Bind ']' to use pbpaste
+# bind ] run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
 
 # faster <ESC> keypres
 set -sg escape-time 0
 
 # easy-to-remember split pane commands
-bind | split-window -h -c "#{pane_current_path}"
-bind - split-window -v -c "#{pane_current_path}"
+bind | split-window -h
+bind - split-window -v
 unbind '"'
 unbind %
-bind c new-window -c "#{pane_current_path}"
+
 # with mouse 
 set -g mouse on
 bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e'"
