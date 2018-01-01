@@ -1,55 +1,45 @@
 set nocompatible              " be iMproved, required
 
+" automatically download vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" """""" "
-" Vundle "
-" """""" "
+" """""""" "
+" Vim-Plug "
+" """""""" "
 "
-filetype off                  " required
+call plug#begin('~/.vim/bundle')
+Plug 'scrooloose/nerdtree'
+Plug 'vim-scripts/Solarized'
+Plug 'christoomey/vim-tmux-navigator' " unified navigation key bindings between vim and tmux
+Plug 'bling/vim-airline'              " fancy status and tab/buffer line
+Plug 'tpope/vim-fugitive'             " git integration
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'ervandew/supertab'              " enable code completion pressing TAB
+Plug 'terryma/vim-multiple-cursors'   " multiple cursors like in sublime text
+Plug 'tomtom/tcomment_vim'            " multi-language code comment utils
+Plug 'jiangmiao/auto-pairs'           " automatic parens management
+Plug 'junegunn/vim-easy-align'        " smart alignment macros
+Plug 'matze/vim-move'                 " move blocks of code 
+Plug 'rhysd/vim-clang-format'         " automatic code formattign
+Plug 'dcharbon/vim-flatbuffers'       " fbs syntax
+Plug 'tpope/vim-surround'             " macros for surronding/changing text with tags/parens
+Plug 'majutsushi/tagbar'              " show a file outline in a pane
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-" other plugin
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'The-NERD-tree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'Solarized'
-Plugin 'bling/vim-airline'
-Plugin 'ctrlp.vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'rking/ag.vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'matze/vim-move'
-Plugin 'majutsushi/tagbar'
-Plugin 'ervandew/supertab'
-Plugin 'neomake/neomake'
-Plugin 'dcharbon/vim-flatbuffers'
-Plugin 'rhysd/vim-clang-format'
-" Plugin 'Syntastic'
-" Plugin 'tpope/vim-dispatch'
-
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-
-filetype plugin indent on    " required
-"
 " Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" :PlugInstall [name ...] [#threads] Install plugins
+" :PlugUpdate [name ...] [#threads]	 Install or update plugins
+" :PlugClean[!]	                     Remove unused directories (bang version will clean without prompt)
+" :PlugUpgrade	                     Upgrade vim-plug itself
+" :PlugStatus	                     Check the status of plugins
+
+" All plugins must be added before the following line
+call plug#end()
+
 
 
 """"""""""
@@ -145,11 +135,11 @@ set ttimeoutlen=10
 
 set backspace=indent,eol,start
 
-" semicolon to behave like :
-nnoremap ; :
-
 " leader is comma
 let mapleader=","
+
+" semicolon to behave like :
+nnoremap ; :
 
 " jk and kj to escape
 inoremap jk <esc>
@@ -163,11 +153,6 @@ comman Q q
 set autoread
 " au CursorHold * checktime
 
-" Ctrl-S to save
-inoremap <C-s> <esc>:w<CR>i
-nnoremap <C-s> :w<CR>
-vnoremap <C-s> <esc>:w<CR>
-
 " remapping for the keys that are used with the Alt modifier on terminal vim
 " (editor must be configured to send Esc+key when Alt is pressed)
 if !has('nvim')
@@ -175,13 +160,11 @@ if !has('nvim')
     set <A-j>=j
     set <A-k>=k
     set <A-l>=l
+    " Ctrl-S to save
+    inoremap <C-s> <esc>:w<CR>i
+    nnoremap <C-s> :w<CR>
+    vnoremap <C-s> <esc>:w<CR>
 endif
-
-" " resize panes with C-S-<movement keys>
-" nmap 6 :resize +2<CR>
-" nmap 7 :resize -2<CR>
-" nmap 8 :vertical resize +2<CR>
-" nmap 9 :vertical resize -2<CR>
 
 " """"""""""""
 " TABS/BUFFERS "
@@ -222,47 +205,48 @@ map <S-F4> :cp<CR>
 " PLUGINS "
 """""""""""
 
-" NERDTree
-" ----- jistr/vim-nerdtree-tabs -----
-" Open/close NERDTree Tabs with ,t or F7
-nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
-nmap <silent> <F7> :NERDTreeTabsToggle<CR>
-" To have NERDTree always open on startup
-let g:nerdtree_tabs_open_on_console_startup = 0
+" --- NERDTree ---
+" Open/close NERDTree with ,t or F7
+nmap <silent> <leader>t :NERDTreeToggle<CR>
+nmap <silent> <F7> :NERDTreeToggle<CR>
 
-" CtrlP
-" map to ctrl-P
-let g:ctrlp_map                = '<c-p>'
-let g:ctrlp_cmd                = 'CtrlP'
-" working dir mode (select as base the first parent containing .git, .svn, etc)
-let g:ctrlp_working_path_mode  = 'ra'
-" exclude files/folders
-set wildignore+=*.so,*.swp,*.zip     " Linux/MacOSX
-let g:ctrlp_custom_ignore      = '\v[\/]\.(git|hg|svn)$'
-" recursive scan parameters
-let g:ctrlp_max_files          = 100000
-" use Ag instead of grep and as scanner engine in CtrlP
-if executable("ag")
-    " Ag already ignores patterns in .gitignore; adding also *.o and cmake-generated .dir
-    let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore "*.o" --ignore "*.dir" -g ""'
-    " ag is fast enough that CtrlP doesn't need to cache
-    let g:ctrlp_use_caching = 0
-endif
+" --- FuzzyFinder FZF ---
+" Ctrl-P to search for files
+nmap <C-p> :FZF<CR>
+" Ctrl-B to search for open buffers
+nmap <C-b> :Buffers<CR>
+" actions on the FZF selected file/buffer/etc
+let g:fzf_action = {
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit' }
+let g:fzf_layout = { 'down': '~40%' }
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
-" " Unite.vim
-" nnoremap <C-p> :Unite file_rec/async<CR>
-
-" vim-multiple-cursors
+" --- vim-multiple-cursors ---
 let g:multi_cursor_use_default_mapping=1
 " let g:multi_cursor_start_key='<C-M>' " this will force a different keystroke to enter multi-cursor mode
 
-" Airline
+" --- Airline ---
 " always show statusline
 set laststatus=2
+let g:airline_extensions = ['tabline'] " only a minimal set of extensions, to reduce the startup time and improve performance
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
 
-" SuperTab
+" --- SuperTab ---
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " tcomment
@@ -279,13 +263,13 @@ nmap ga <Plug>(EasyAlign)"
 " TagBar
 nmap <F8> :TagbarToggle<CR>
 
-" custom filetype associations
-autocmd BufNewFile,BufRead *.nionet  set filetype=yaml
-autocmd BufNewFile,BufRead *.nnmsg   set filetype=yaml
-
 " """""""""""""""""""" "
 " small customizations "
 " """""""""""""""""""" "
+
+" custom filetype associations
+autocmd BufNewFile,BufRead *.nionet  set filetype=yaml
+autocmd BufNewFile,BufRead *.nnmsg   set filetype=yaml
 
 " quick function for switching header/source, using ctags
 " tags must be generated using the following cmdline: ctags -R --extra=+f <DIR>
@@ -306,3 +290,17 @@ function TrimWhiteSpace()
     ''
 endfunction
 map <F2> :call TrimWhiteSpace()<CR>
+
+
+" """" "
+" misc "
+" """" "
+
+" --- to profile vim itself, use the following:
+" :profile start profile.log
+" :profile func *
+" :profile file *
+" " At this point do slow actions
+" :profile pause
+" :noautocmd qall!
+
