@@ -28,6 +28,7 @@ Plug 'matze/vim-move'                 " move blocks of code
 Plug 'rhysd/vim-clang-format'         " automatic code formattign
 Plug 'dcharbon/vim-flatbuffers'       " fbs syntax
 Plug 'tpope/vim-surround'             " macros for surronding/changing text with tags/parens
+Plug 'tpope/vim-dispatch'             " async jobs
 Plug 'majutsushi/tagbar'              " show a file outline in a pane
 
 " Brief help
@@ -199,7 +200,8 @@ map <F5> :make<CR><C-w><Up>
 map <S-F5> :w <BAR> make<CR><C-w><Up>
 map <F4> :cn<CR>
 map <S-F4> :cp<CR>
-
+"use async make if vim-dispatch is installed
+autocmd VimEnter * if exists(":Make") | exe "map <F5> :Make<CR><C-w><Up>" | exe "map <S-F5> :w <BAR> Make<CR><C-w><Up>" | endif
 
 """""""""""
 " PLUGINS "
