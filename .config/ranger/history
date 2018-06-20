@@ -1,0 +1,7 @@
+open_with 
+rename bgfx
+h
+set show_hidden
+set show_hidden!
+rename wscript
+delete

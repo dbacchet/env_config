@@ -6,10 +6,10 @@
 [push]
 	default = simple
 [user]
-	email = dbacchet@teslamotors.com
+	email = davide.bacchet@nio.io
 	name = Davide Bacchet
 [core]
-	excludesfile = /Users/dbacchet/.gitignore_global
+	excludesfile = /Users/davide.bacchet/.gitignore_global
 	editor = vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
@@ -19,3 +19,8 @@
 	trustExitCode = true
 [diff]
 	tool = bc
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

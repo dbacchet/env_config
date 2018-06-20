@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/davide.bacchet/dev/AD'
+let g:netrw_dirhist_2='/Users/davide.bacchet/dev/AD/tools'
+let g:netrw_dirhist_3='/Users/davide.bacchet/dev/AD/tools/sim'
+let g:netrw_dirhist_4='/Users/davide.bacchet/dev/AD/tools/sim/sandbox'
+let g:netrw_dirhist_5='/Users/davide.bacchet/dev/AD/tools/sim/sandbox/sample_ecs_physics'
+let g:netrw_dirhist_6='/Users/davide.bacchet/dev/AD'

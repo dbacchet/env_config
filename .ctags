@@ -5,4 +5,8 @@
 --exclude=build/*
 --exclude=cbuild/*
 --exclude=docs/html/*
+--exclude=catkin_ws/*
+--exclude=*/s32k*/*
+--exclude=*/eigen/*
+--exclude=external/*
 

@@ -85,6 +85,14 @@ export EDITOR='vim'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias fuck='eval $(thefuck $(fc -ln -1)); history -r'
-alias vim=/usr/local/bin/vim
+if ! type "$nvim" > /dev/null; then
+    alias vim=nvim
+else
+    alias vim=/usr/local/bin/vim
+fi
 alias tmux='tmux -2'
+alias python=python3
 
+
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
