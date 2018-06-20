@@ -31,8 +31,8 @@ set -g status-keys vi
 # setw -g utf8 on
 
 # start selection, yank and paste like in vim
-bind-key -t vi-copy v begin-selection
-bind-key -t vi-copy y copy-selection
+bind-key -T copy-mode-vi v send -X begin-selection
+bind-key -T copy-mode-vi y send -X copy-selection-and-cancel
 
 # faster <ESC> keypres
 set -sg escape-time 0
