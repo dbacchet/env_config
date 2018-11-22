@@ -17,7 +17,9 @@ Plug 'vim-scripts/Solarized'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'christoomey/vim-tmux-navigator' " unified navigation key bindings between vim and tmux
-Plug 'bling/vim-airline'              " fancy status and tab/buffer line
+" Plug 'bling/vim-airline'              " fancy status and tab/buffer line
+Plug 'itchyny/lightline.vim'
+Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-fugitive'             " git integration
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -261,6 +263,7 @@ let g:multi_cursor_use_default_mapping=1
 set laststatus=2
 let g:airline_extensions = ['tabline'] " only a minimal set of extensions, to reduce the startup time and improve performance
 let g:airline_powerline_fonts = 1
+" let g:buftabline_indicators = 1
 
 " --- Code Completion ---
 if has('nvim')
@@ -295,20 +298,6 @@ if has('nvim')
   nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
   nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
   nnoremap <silent> gs :call LanguageClient#textDocument_documentSymbol()<CR>
-if executable('clangd')
-    augroup lsp_clangd
-        autocmd!
-        autocmd User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                    \ })
-        autocmd FileType c setlocal omnifunc=lsp#complete
-        autocmd FileType cpp setlocal omnifunc=lsp#complete
-        autocmd FileType objc setlocal omnifunc=lsp#complete
-        autocmd FileType objcpp setlocal omnifunc=lsp#complete
-    augroup end
-endif
 endif
 " --- SuperTab ---
 let g:SuperTabDefaultCompletionType = "<c-n>"

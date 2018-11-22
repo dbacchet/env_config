@@ -279,10 +279,16 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>-1590 515 620 392 -2560 -253 2560 1417 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-2226 3 796 473 -2560 -253 2560 1417 </string>
+	<string>-2226 3 796 486 -2560 -253 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-2444 222 906 877 -2560 -253 2560 1417 </string>
+	<string>-2559 -253 2502 1417 -2560 -253 2560 1417 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>-2441 -253 2243 1417 -2560 -253 2560 1417 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>197 10 850 867 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -932,6 +938,8 @@
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
 	<integer>1</integer>
+	<key>NoSyncPermissionToShowTip</key>
+	<false/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>550010411.11979401</real>
 	<key>PMPrintingExpandedStateForPrint2</key>
@@ -982,7 +990,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-06-06T20:42:50Z</date>
+	<date>2018-11-06T16:48:06Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
@@ -1000,7 +1008,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.6</string>
+	<string>3.2.5</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

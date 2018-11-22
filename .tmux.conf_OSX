@@ -4,6 +4,7 @@ unbind C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
+bind a send-prefix
 # shell
 set -g default-command "reattach-to-user-namespace -l $SHELL"
 set -g default-shell $SHELL
