@@ -33,7 +33,8 @@ set -g status-keys vi
 
 # start selection, yank and paste like in vim
 bind-key -T copy-mode-vi v send -X begin-selection
-bind-key -T copy-mode-vi y send -X copy-selection-and-cancel
+bind-key -T copy-mode-vi y send -X copy-pipe-and-cancel 'xclip -in -selection clipboard'
+bind-key ] run "xclip -o -selection clipboard | tmux load-buffer - && tmux paste-buffer"
 
 # faster <ESC> keypres
 set -sg escape-time 0

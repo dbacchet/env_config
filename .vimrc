@@ -122,7 +122,7 @@ endif
 " hit CR in normal mode to clear the search highlights
 nnoremap <silent> <CR> :noh<CR><CR>
 
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " visual autocomplete for command menu
 set wildmenu
