@@ -11,3 +11,4 @@ case "$OSTYPE" in
   linux*)   cp .env_config/.tmux.conf_linux .tmux.conf ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac
+
