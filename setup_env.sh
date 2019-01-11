@@ -11,4 +11,8 @@ case "$OSTYPE" in
   linux*)   cp .env_config/.tmux.conf_linux .tmux.conf ;;
   *)        echo "unknown: $OSTYPE" ;;
 esac
-
+# install oh-my-zsh
+git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+# custom zsh theme and config file
+cp .env_config/zsh/themes/dbacchet.zsh-theme ~/.oh-my-zsh/themes
+cp .env_config/.zshrc .
