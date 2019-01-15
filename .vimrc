@@ -38,7 +38,8 @@ Plug 'majutsushi/tagbar'              " show a file outline in a pane
 Plug 'schickling/vim-bufonly'         " close all buffers except the current
 " heavy code completion plugins only with neovim
 if has('nvim')
-  Plug 'roxma/nvim-completion-manager'
+  Plug 'ncm2/ncm2'
+  Plug 'roxma/nvim-yarp'
   Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 endif
 Plug 'ervandew/supertab'              " enable code completion pressing TAB
@@ -263,17 +264,21 @@ let g:multi_cursor_use_default_mapping=1
 set laststatus=2
 let g:airline_extensions = ['tabline'] " only a minimal set of extensions, to reduce the startup time and improve performance
 let g:airline_powerline_fonts = 1
-" let g:buftabline_indicators = 1
+let g:buftabline_indicators = 1
 
 " --- Code Completion ---
 if has('nvim')
-  " " --- nvim completion manager ---
+  " --- nvim completion manager ---
+  " enable ncm2 for all buffers
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+  " IMPORTANT: :help Ncm2PopupOpen for more information
+  set completeopt=noinsert,menuone,noselect
   let g:cm_sources_override = {
       \ 'cm-tags': {'enable':0}
       \ }
   let g:cm_complete_start_delay = 50 " to improve response time while typing
   let g:cm_complete_popup_delay = 50 " default value
-  " LanguageClient LSP
+  " --- LanguageClient LSP ---
   if 1
     let g:LanguageClient_serverCommands = {
     \ 'cpp': ['clangd'],
