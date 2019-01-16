@@ -41,8 +41,10 @@ if has('nvim')
   Plug 'ncm2/ncm2'
   Plug 'roxma/nvim-yarp'
   Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+  Plug 'ncm2/ncm2-jedi'
 endif
 Plug 'ervandew/supertab'              " enable code completion pressing TAB
+Plug 'mhinz/vim-startify'             " nice start screen with the list of the recently used files
 
 " Brief help
 " :PlugInstall [name ...] [#threads] Install plugins
@@ -266,6 +268,12 @@ let g:airline_extensions = ['tabline'] " only a minimal set of extensions, to re
 let g:airline_powerline_fonts = 1
 let g:buftabline_indicators = 1
 
+" --- Startify ---
+" only show the most recent files in the current dir
+let g:startify_lists = [
+  \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+  \ ]
+
 " --- Code Completion ---
 if has('nvim')
   " --- nvim completion manager ---
@@ -279,22 +287,27 @@ if has('nvim')
   let g:cm_complete_start_delay = 50 " to improve response time while typing
   let g:cm_complete_popup_delay = 50 " default value
   " --- LanguageClient LSP ---
-  if 1
+  if executable('clangd') " prefer clangd over cquery
     let g:LanguageClient_serverCommands = {
     \ 'cpp': ['clangd'],
-    \ 'c': ['clangd'],
-    \ 'python': ['pyls']
+    \ 'c': ['clangd']
     \ }
-  else
+  elseif executable('cquery')
     " for very large codebases, consider cquery instead:
     let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log'],
-    \ 'python': ['pyls']
+    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log']
     \ }
     let g:LanguageClient_loadSettings = 1
-    let g:LanguageClient_settingsPath = '/Users/davide.bacchet/.config/nvim/settings.json'
+    let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
+  else
+      " echom 'neither clangd nor cquery has been found'
+    let g:startify_custom_footer =
+           \ ['', "   --- neither clangd nor cquery in path: C/C++ code-completion disabled ---  ", '']
   endif
-  set signcolumn=yes " to force 1 column in the vim gutter for the linter signs
+  " for python, use the ncm2-jedi plugin instead of the language server (disable the language client for python)
+  call ncm2#override_source('LanguageClient_python', {'enable': 0})
+  " to force 1 column in the vim gutter for the linter signs
+  set signcolumn=yes
   nmap <leader>c :call LanguageClient_contextMenu()<CR>
   set completefunc=LanguageClient#complete
   set formatexpr=LanguageClient_textDocument_rangeFormatting()
