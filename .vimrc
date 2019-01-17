@@ -273,6 +273,7 @@ let g:buftabline_indicators = 1
 let g:startify_lists = [
   \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
   \ ]
+let g:startify_change_to_dir = 0 " do not change to file dir on open 
 
 " --- Code Completion ---
 if has('nvim')
