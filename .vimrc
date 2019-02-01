@@ -17,7 +17,6 @@ Plug 'vim-scripts/Solarized'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'christoomey/vim-tmux-navigator' " unified navigation key bindings between vim and tmux
-" Plug 'bling/vim-airline'              " fancy status and tab/buffer line
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'tpope/vim-fugitive'             " git integration
@@ -25,16 +24,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'terryma/vim-multiple-cursors'   " multiple cursors like in sublime text
 Plug 'tomtom/tcomment_vim'            " multi-language code comment utils
-Plug 'jiangmiao/auto-pairs'           " automatic parens management
+Plug 'tmsvg/pear-tree'                " automatic parens management
 Plug 'junegunn/vim-easy-align'        " smart alignment macros
 Plug 'matze/vim-move'                 " move blocks of code 
 Plug 'rhysd/vim-clang-format'         " automatic code formattign
-" Plug 'dcharbon/vim-flatbuffers'       " fbs syntax
 Plug 'tpope/vim-surround'             " macros for surronding/changing text with tags/parens
 Plug 'tpope/vim-dispatch'             " async jobs
 Plug 'radenling/vim-dispatch-neovim'  " better integration of vim-dispatch and neovim
 Plug 'majutsushi/tagbar'              " show a file outline in a pane
-" Plug 'dbacchet/tup.vim'               " syntax plugin for the tup build system
 Plug 'schickling/vim-bufonly'         " close all buffers except the current
 " heavy code completion plugins only with neovim
 if has('nvim')
@@ -225,6 +222,7 @@ autocmd VimEnter * if exists(":Make") | exe "map <F5> :Make<CR><C-w><Up>" | exe 
 """""""""""
 " PLUGINS "
 """""""""""
+let g:pear_tree_repeatable_expand = 0
 
 " --- NERDTree ---
 " Open/close NERDTree with ,t or F7
