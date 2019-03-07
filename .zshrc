@@ -48,6 +48,8 @@ fi
 alias tmux='tmux -2'
 alias python=python3
 
+# use the silver searcher with fuzzy finder
+export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
