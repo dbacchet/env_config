@@ -1,5 +1,9 @@
 set nocompatible              " be iMproved, required
 
+" """""""" "
+" Vim-Plug "
+" """""""" "
+"
 " automatically download vim-plug
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -7,19 +11,13 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" """""""" "
-" Vim-Plug "
-" """""""" "
-"
 call plug#begin('~/.vim/bundle')
 Plug 'scrooloose/nerdtree'
-Plug 'vim-scripts/Solarized'
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'christoomey/vim-tmux-navigator' " unified navigation key bindings between vim and tmux
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
-Plug 'tpope/vim-fugitive'             " git integration
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'terryma/vim-multiple-cursors'   " multiple cursors like in sublime text
@@ -28,17 +26,26 @@ Plug 'tmsvg/pear-tree'                " automatic parens management
 Plug 'junegunn/vim-easy-align'        " smart alignment macros
 Plug 'matze/vim-move'                 " move blocks of code 
 Plug 'rhysd/vim-clang-format'         " automatic code formattign
+Plug 'tpope/vim-fugitive'             " git integration
 Plug 'tpope/vim-surround'             " macros for surronding/changing text with tags/parens
 Plug 'tpope/vim-dispatch'             " async jobs
 Plug 'radenling/vim-dispatch-neovim'  " better integration of vim-dispatch and neovim
 Plug 'majutsushi/tagbar'              " show a file outline in a pane
 Plug 'schickling/vim-bufonly'         " close all buffers except the current
-" heavy code completion plugins only with neovim
-if has('nvim')
-  Plug 'ncm2/ncm2'
-  Plug 'roxma/nvim-yarp'
-  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-  Plug 'ncm2/ncm2-jedi'
+" select which completion engine (with LSP support) to use:
+let use_coc = 0
+let use_ncm2 = 0
+if has('nvim') " only enable the heavy plugins with neovim
+  if has('nvim') && executable('node') && 0 " CoC requiresrequires Node.js - KEEP IT DISABLED FOR NOW, UNTIL I FIGURE OUT THE UNDO PROBLEM (likely some combination of plugins)
+    let use_coc = 1
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  else
+    let use_ncm2 = 1
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
+    Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+    Plug 'ncm2/ncm2-jedi'
+  endif
 endif
 Plug 'ervandew/supertab'              " enable code completion pressing TAB
 Plug 'mhinz/vim-startify'             " nice start screen with the list of the recently used files
@@ -52,7 +59,6 @@ Plug 'mhinz/vim-startify'             " nice start screen with the list of the r
 
 " All plugins must be added before the following line
 call plug#end()
-
 
 
 """"""""""
@@ -89,18 +95,10 @@ set cursorline
 " color column at specified width
 set colorcolumn=120
 " color scheme
-if has('nvim')
-    set termguicolors
-endif
+set termguicolors
 set background=dark
-let g:solarized_italic=0    "default value is 1
-let g:solarized_termcolors=256    "default value is 16
-if has('nvim')
-  let g:neodark#background = '#202020'
-  colorscheme neodark
-else
-  colorscheme solarized
-endif
+let g:neodark#background = '#202020'
+colorscheme neodark
 
 " disable Background Color Erase for xterm-like terminals (even inside tmux)
 set t_ut=
@@ -259,7 +257,7 @@ let g:fzf_colors =
 let g:multi_cursor_use_default_mapping=1
 " let g:multi_cursor_start_key='<C-M>' " this will force a different keystroke to enter multi-cursor mode
 
-" --- Airline ---
+" --- Airline --- (also used by lightline)
 " always show statusline
 set laststatus=2
 let g:airline_extensions = ['tabline'] " only a minimal set of extensions, to reduce the startup time and improve performance
@@ -274,7 +272,14 @@ let g:startify_lists = [
 let g:startify_change_to_dir = 0 " do not change to file dir on open 
 
 " --- Code Completion ---
-if has('nvim')
+" to force 1 column in the vim gutter for the linter signs
+set signcolumn=yes
+if use_coc
+  " nothing needed here for CoC; all the configuration is handled in
+  " ~/.config/nvim/coc-settings.json
+  let g:startify_custom_footer =
+         \ ['', "   --- using CoC  ---  ", '']
+elseif use_ncm2  
   " --- nvim completion manager ---
   " enable ncm2 for all buffers
   autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -286,35 +291,21 @@ if has('nvim')
   let g:cm_complete_start_delay = 50 " to improve response time while typing
   let g:cm_complete_popup_delay = 50 " default value
   " --- LanguageClient LSP ---
-  if executable('clangd') " prefer clangd over cquery
-    let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['clangd'],
-    \ 'c': ['clangd']
-    \ }
-  elseif executable('cquery')
-    " for very large codebases, consider cquery instead:
-    let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log']
-    \ }
-    let g:LanguageClient_loadSettings = 1
-    let g:LanguageClient_settingsPath = '~/.config/nvim/settings.json'
-  else
-      " echom 'neither clangd nor cquery has been found'
-    let g:startify_custom_footer =
-           \ ['', "   --- neither clangd nor cquery in path: C/C++ code-completion disabled ---  ", '']
-  endif
+  let g:LanguageClient_serverCommands = {
+  \ 'cpp': ['clangd','--background-index=0','--header-insertion=never'],
+  \ 'c':   ['clangd','--background-index=0','--header-insertion=never'],
+  \ }
   " for python, use the ncm2-jedi plugin instead of the language server (disable the language client for python)
   call ncm2#override_source('LanguageClient_python', {'enable': 0})
-  " to force 1 column in the vim gutter for the linter signs
-  set signcolumn=yes
+  " mappings
   nmap <leader>c :call LanguageClient_contextMenu()<CR>
   set completefunc=LanguageClient#complete
   set formatexpr=LanguageClient_textDocument_rangeFormatting()
-
-  nnoremap <silent> gh :call LanguageClient#textDocument_hover()<CR>
-  nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-  nnoremap <silent> gr :call LanguageClient#textDocument_references()<CR>
-  nnoremap <silent> gs :call LanguageClient#textDocument_documentSymbol()<CR>
+  let g:startify_custom_footer =
+         \ ['', "   --- using ncm2  ---  ", '']
+else
+  let g:startify_custom_footer =
+         \ ['', "   --- code-completion disabled ---  ", '']
 endif
 " --- SuperTab ---
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -341,19 +332,6 @@ nmap <F8> :TagbarToggle<CR>
 autocmd BufNewFile,BufRead *.nionet  set filetype=yaml
 autocmd BufNewFile,BufRead *.nnmsg   set filetype=yaml
 " autocmd BufNewFile,BufRead *.h       set filetype=cpp
-
-" quick function for switching header/source, using ctags
-" tags must be generated using the following cmdline: ctags -R --extra=+f <DIR>
-function! SwitchSourceHeader()
-  "update!
-  if (expand ("%:e") == "cpp")
-    execute "tag " . expand("%:t:r") . ".h"
-  else
-    execute "tag " . expand("%:t:r") . ".cpp"
-  endif
-endfunction
-
-nmap <leader>s :call SwitchSourceHeader()<CR>
 
 " Removes trailing spaces
 function TrimWhiteSpace()

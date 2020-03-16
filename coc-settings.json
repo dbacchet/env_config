@@ -1,0 +1,3 @@
+{
+  "clangd.arguments": ["--background-index=0","--header-insertion=never"],
+}
