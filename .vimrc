@@ -95,7 +95,12 @@ set cursorline
 " color column at specified width
 set colorcolumn=120
 " color scheme
-set termguicolors
+if exists('+termguicolors')
+    " needed for true color in regular vim under tmux (see: https://github.com/tmux/tmux/issues/1246)
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
 set background=dark
 let g:neodark#background = '#202020'
 colorscheme neodark
