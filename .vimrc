@@ -233,6 +233,9 @@ nmap <silent> <leader>t :NERDTreeToggle<CR>
 nmap <silent> <F7> :NERDTreeToggle<CR>
 
 " --- FuzzyFinder FZF ---
+if executable('rg')
+  let $FZF_DEFAULT_COMMAND='rg --files --smart-case' " use ripgrep for fzf if is installed
+endif
 " Ctrl-P to search for files
 nmap <C-p> :FZF<CR>
 " Ctrl-B to search for open buffers
@@ -345,6 +348,18 @@ function TrimWhiteSpace()
 endfunction
 map <F2> :call TrimWhiteSpace()<CR>
 
+" Toggle LanguageClient
+function ToggleLanguageClient()
+    if g:LanguageClientEnabled
+        LanguageClientStop
+        let g:LanguageClientEnabled = 0
+    else
+        LanguageClientStart
+        let g:LanguageClientEnabled = 1
+  endif
+endfunction
+let g:LanguageClientEnabled = 1
+map <F3> :call ToggleLanguageClient()<CR>
 
 " """" "
 " misc "
