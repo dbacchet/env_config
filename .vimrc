@@ -300,6 +300,7 @@ elseif use_ncm2
   let g:cm_complete_popup_delay = 50 " default value
   " --- LanguageClient LSP ---
   let g:LanguageClient_serverCommands = {
+  \ 'rust': ['rls'],
   \ 'cpp': ['clangd','--background-index=0','--header-insertion=never'],
   \ 'c':   ['clangd','--background-index=0','--header-insertion=never'],
   \ }
