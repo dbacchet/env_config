@@ -47,6 +47,7 @@ if ! type "$nvim" > /dev/null; then
 fi
 alias tmux='tmux -2'
 alias python=python3
+alias rgf="rg --files | rg"
 
 # use the silver searcher with fuzzy finder
 export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
