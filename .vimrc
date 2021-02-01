@@ -32,6 +32,7 @@ Plug 'tpope/vim-dispatch'             " async jobs
 Plug 'radenling/vim-dispatch-neovim'  " better integration of vim-dispatch and neovim
 Plug 'majutsushi/tagbar'              " show a file outline in a pane
 Plug 'schickling/vim-bufonly'         " close all buffers except the current
+Plug 'mbbill/undotree'                " visual tree with all the undo/redo branches
 " select which completion engine (with LSP support) to use:
 let use_coc = 0
 let use_ncm2 = 0
@@ -332,6 +333,9 @@ nmap ga <Plug>(EasyAlign)"
 
 " TagBar
 nmap <F8> :TagbarToggle<CR>
+
+" UndoTree
+map <F6> :UndotreeToggle<CR>
 
 " """""""""""""""""""" "
 " small customizations "
