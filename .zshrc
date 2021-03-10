@@ -20,7 +20,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-syntax-highlighting)
+plugins=(git z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -49,8 +49,6 @@ alias tmux='tmux -2'
 alias python=python3
 alias rgf="rg --files | rg"
 
-# use the silver searcher with fuzzy finder
-export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
-
-
+# use ripgrep with fuzzy finder
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -301,10 +301,11 @@ elseif use_ncm2
   let g:cm_complete_start_delay = 50 " to improve response time while typing
   let g:cm_complete_popup_delay = 50 " default value
   " --- LanguageClient LSP ---
+  let g:LanguageClient_serverStderr = '/tmp/clangd.stderr'
   let g:LanguageClient_serverCommands = {
   \ 'rust': ['rls'],
-  \ 'cpp': ['clangd','--background-index=0','--header-insertion=never'],
-  \ 'c':   ['clangd','--background-index=0','--header-insertion=never'],
+  \ 'cpp': ['clangd','--background-index=0','--header-insertion=never','--log=verbose'],
+  \ 'c':   ['clangd','--background-index=0','--header-insertion=never','--log=verbose'],
   \ }
   " for python, use the ncm2-jedi plugin instead of the language server (disable the language client for python)
   call ncm2#override_source('LanguageClient_python', {'enable': 0})
