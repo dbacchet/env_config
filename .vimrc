@@ -28,8 +28,8 @@ Plug 'matze/vim-move'                 " move blocks of code
 Plug 'rhysd/vim-clang-format'         " automatic code formattign
 Plug 'tpope/vim-fugitive'             " git integration
 Plug 'tpope/vim-surround'             " macros for surronding/changing text with tags/parens
-Plug 'tpope/vim-dispatch'             " async jobs
-Plug 'radenling/vim-dispatch-neovim'  " better integration of vim-dispatch and neovim
+" Plug 'tpope/vim-dispatch'             " async jobs
+" Plug 'radenling/vim-dispatch-neovim'  " better integration of vim-dispatch and neovim
 Plug 'majutsushi/tagbar'              " show a file outline in a pane
 Plug 'schickling/vim-bufonly'         " close all buffers except the current
 Plug 'mbbill/undotree'                " visual tree with all the undo/redo branches
@@ -323,9 +323,10 @@ endif
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " tcomment
-" I need to find a better configuration to provide a more consistent approach
-nmap <leader>/ gc
-xmap <leader>/ gcgv
+" disable default mappings and only map the minimum
+let g:tcomment_maps = 0
+nnoremap <C-_><C-_> :TComment<CR>
+vnoremap <C-_><C-_> :TComment<CR>gv
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
