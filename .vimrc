@@ -126,7 +126,19 @@ endif
 " hit CR in normal mode to clear the search highlights
 nnoremap <silent> <CR> :noh<CR><CR>
 
-set clipboard=unnamedplus
+" leader is comma
+let mapleader=","
+
+" using clipboard=unnamedplus in neovim is very slow because every event (potentially every keystroke like 
+" repeating 'x' in normal mode) will invoke an external process (i.e. 'pbcopy') through the clipboard provider.
+" To prevent this we use the default vim clipboard while editing, and mapped <leader>x/y/p to work with the system clipboard
+" set clipboard=unnamedplus <-- with nvim this 
+nnoremap <leader>x "+x
+vnoremap <leader>x "+x
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+gP
+vnoremap <leader>p "+gP
 
 " visual autocomplete for command menu
 set wildmenu
@@ -156,9 +168,6 @@ set ttimeoutlen=10
 
 set backspace=indent,eol,start
 
-" leader is comma
-let mapleader=","
-
 " semicolon to behave like :
 nnoremap ; :
 
@@ -176,13 +185,9 @@ set autoread
 
 " remapping for the keys that are used with the Alt modifier on terminal vim
 " (editor must be configured to send Esc+key when Alt is pressed)
-if !has('nvim')
-    set <A-h>=h
-    set <A-j>=j
-    set <A-k>=k
-    set <A-l>=l
+if has('nvim')
     " Ctrl-S to save
-    inoremap <C-s> <esc>:w<CR>i
+    inoremap <C-s> <esc>:w<CR>gi
     nnoremap <C-s> :w<CR>
     vnoremap <C-s> <esc>:w<CR>
 endif
@@ -199,12 +204,8 @@ set hidden
 nmap <leader>n :enew<cr>
 " Move to the next buffer
 nmap <leader>l :bnext<CR>
-nmap <A-l> :bnext<CR>
-imap <A-l> <ESC>:bnext<CR>
 " Move to the previous buffer
 nmap <leader>h :bprevious<CR>
-nmap <A-h> :bprevious<CR>
-imap <A-h> <ESC>:bprevious<CR>
 " Close the current buffer and move to the previous one. This replicates the idea of closing a tab
 nnoremap <leader>bb :bp <BAR> bd #<CR>
 " Show all open buffers and their status
