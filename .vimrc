@@ -20,7 +20,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'terryma/vim-multiple-cursors'   " multiple cursors like in sublime text
+Plug 'mg979/vim-visual-multi', {'branch': 'master'} " multiple cursors
 Plug 'tomtom/tcomment_vim'            " multi-language code comment utils
 Plug 'tmsvg/pear-tree'                " automatic parens management
 Plug 'junegunn/vim-easy-align'        " smart alignment macros
@@ -263,9 +263,8 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" --- vim-multiple-cursors ---
-let g:multi_cursor_use_default_mapping=1
-" let g:multi_cursor_start_key='<C-M>' " this will force a different keystroke to enter multi-cursor mode
+" --- vim-visual-multi ---
+let g:VM_theme = 'spacegray' " more visible highlights
 
 " --- Airline --- (also used by lightline)
 " always show statusline
