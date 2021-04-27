@@ -52,3 +52,7 @@ alias rgf="rg --files | rg"
 # use ripgrep with fuzzy finder
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# customize the ls colors (dirs and executables in bold)
+export LSCOLORS=ExfxcxdxBxegedabagacad
+

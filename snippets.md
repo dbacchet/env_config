@@ -63,3 +63,39 @@ terminal without a title bar in Ubuntu 20.04
 --------------------------------------------
 use the instructions here: https://github.com/pixel-saver/pixel-saver
 
+
+How to Fix the Home and End Buttons for an External Keyboard in Mac
+-------------------------------------------------------------------
+
+(from [this medium article](https://medium.com/@elhayefrat/how-to-fix-the-home-and-end-buttons-for-an-external-keyboard-in-mac-4da773a0d3a2))
+if you are a seasoned Mac user, you will know that the shortcut keys “Command + Left arrow” and “Command + Right arrow” move the cursor to the start and end of the line respectively. However, if you use a full-size external keyboard for your Mac, you will find that the “Home” and “End” buttons aren’t working properly. In fact, they are not working at all since Apple doesn’t bind the buttons to any function.
+If you want to fix the “Home” and “End” buttons, here is a quick tip to get them working again the way they should.
+1. Open a terminal. You can access it from the Launchpad.
+2. Type the following commands (and press Enter after each line):
+    sudo bash 
+    mkdir -p ~/Library/KeyBindings ; cd ~/Library/KeyBindings
+    vim DefaultKeyBinding.dict
+    What the above commands do is create a new “KeyBindings” folder in the “Library” folder and add a new “DefaultKeyBinding.dict” file.
+3. In the text editor that opens, copy and paste the following commands to it:
+```
+{
+/* Remap Home / End keys */
+/* Home Button*/
+"\UF729" = "moveToBeginningOfLine:"; 
+/* End Button */
+"\UF72B" = "moveToEndOfLine:"; 
+/* Shift + Home Button */
+"$\UF729" = "moveToBeginningOfLineAndModifySelection:"; 
+/* Shift + End Button */
+"$\UF72B" = "moveToEndOfLineAndModifySelection:"; 
+/* Ctrl + Home Button */
+"^\UF729" = "moveToBeginningOfDocument:"; 
+/* Ctrl + End Button */
+"^\UF72B" = "moveToEndOfDocument:"; 
+ /* Shift + Ctrl + Home Button */
+"$^\UF729" = "moveToBeginningOfDocumentAndModifySelection:";
+/* Shift + Ctrl + End Button*/
+"$^\UF72B" = "moveToEndOfDocumentAndModifySelection:"; 
+}
+```
+4. Save and restart your Mac. The “Home” and “End” should be working now, and you can use it in conjunction with the “Shift” and “Ctrl” modifier buttons.
