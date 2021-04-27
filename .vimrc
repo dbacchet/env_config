@@ -137,8 +137,10 @@ nnoremap <leader>x "+x
 vnoremap <leader>x "+x
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y
-nnoremap <leader>p "+gP
-vnoremap <leader>p "+gP
+nnoremap <leader>p "+gp
+vnoremap <leader>p "+gp
+nnoremap <leader>P "+gP
+vnoremap <leader>P "+gP
 
 " visual autocomplete for command menu
 set wildmenu
