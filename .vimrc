@@ -14,7 +14,7 @@ endif
 call plug#begin('~/.vim/bundle')
 Plug 'scrooloose/nerdtree'
 Plug 'KeitaNakamura/neodark.vim'
-Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'           " language packs
 Plug 'christoomey/vim-tmux-navigator' " unified navigation key bindings between vim and tmux
 Plug 'itchyny/lightline.vim'
 Plug 'ap/vim-buftabline'
@@ -28,28 +28,30 @@ Plug 'matze/vim-move'                 " move blocks of code
 Plug 'rhysd/vim-clang-format'         " automatic code formattign
 Plug 'tpope/vim-fugitive'             " git integration
 Plug 'tpope/vim-surround'             " macros for surronding/changing text with tags/parens
-" Plug 'tpope/vim-dispatch'             " async jobs
-" Plug 'radenling/vim-dispatch-neovim'  " better integration of vim-dispatch and neovim
-Plug 'majutsushi/tagbar'              " show a file outline in a pane
-Plug 'schickling/vim-bufonly'         " close all buffers except the current
+" Plug 'majutsushi/tagbar'              " show a file outline in a pane
+" Plug 'schickling/vim-bufonly'         " close all buffers except the current
 Plug 'mbbill/undotree'                " visual tree with all the undo/redo branches
-" select which completion engine (with LSP support) to use:
-let use_coc = 0
-let use_ncm2 = 0
-if has('nvim') " only enable the heavy plugins with neovim
-  if has('nvim') && executable('node') && 0 " CoC requiresrequires Node.js - KEEP IT DISABLED FOR NOW, UNTIL I FIGURE OUT THE UNDO PROBLEM (likely some combination of plugins)
-    let use_coc = 1
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  else
-    let use_ncm2 = 1
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-    Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-    Plug 'ncm2/ncm2-jedi'
-  endif
-endif
-Plug 'ervandew/supertab'              " enable code completion pressing TAB
 Plug 'mhinz/vim-startify'             " nice start screen with the list of the recently used files
+" Markdown live preview (prebuilt version)
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+
+" completion engines only used in neovim
+let use_cmp = 0
+if has("nvim")
+  Plug 'williamboman/mason.nvim'
+  Plug 'williamboman/mason-lspconfig.nvim'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-buffer'
+  Plug 'hrsh7th/cmp-path'
+  Plug 'hrsh7th/cmp-cmdline'
+  Plug 'hrsh7th/nvim-cmp'
+  
+  " For vsnip users.
+  Plug 'hrsh7th/cmp-vsnip'
+  Plug 'hrsh7th/vim-vsnip'
+  let use_cmp = 1
+endif
 
 " Brief help
 " :PlugInstall [name ...] [#threads] Install plugins
@@ -154,10 +156,10 @@ set splitright
 
 " enable mouse support in all modes
 set mouse=a
-if &term =~ '^screen'
-    " tmux knows the extended mouse mode
-    set ttymouse=xterm2
-endif
+" if &term =~ '^screen'
+"     " tmux knows the extended mouse mode
+"     set ttymouse=xterm2
+" endif
 
 " """""""" "
 " KEYBOARD "
@@ -216,20 +218,11 @@ nnoremap <leader>bl :ls<CR>
 nnoremap <leader>bf :NERDTreeFind<CR>
 
 
-""""""""""""
-" QUICKFIX "
-""""""""""""
-map <F5> :make<CR><C-w><Up>
-map <S-F5> :w <BAR> make<CR><C-w><Up>
-map <F4> :cn<CR>
-map <S-F4> :cp<CR>
-"use async make if vim-dispatch is installed
-autocmd VimEnter * if exists(":Make") | exe "map <F5> :Make<CR><C-w><Up>" | exe "map <S-F5> :w <BAR> Make<CR><C-w><Up>" | endif
-
 """""""""""
 " PLUGINS "
 """""""""""
-let g:pear_tree_repeatable_expand = 0
+" " pear-tree
+" let g:pear_tree_repeatable_expand = 0
 
 " --- NERDTree ---
 " Open/close NERDTree with ,t or F7
@@ -285,43 +278,13 @@ let g:startify_change_to_dir = 0 " do not change to file dir on open
 " --- Code Completion ---
 " to force 1 column in the vim gutter for the linter signs
 set signcolumn=yes
-if use_coc
-  " nothing needed here for CoC; all the configuration is handled in
-  " ~/.config/nvim/coc-settings.json
+if use_cmp  
   let g:startify_custom_footer =
-         \ ['', "   --- using CoC  ---  ", '']
-elseif use_ncm2  
-  " --- nvim completion manager ---
-  " enable ncm2 for all buffers
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-  " IMPORTANT: :help Ncm2PopupOpen for more information
-  set completeopt=noinsert,menuone,noselect
-  let g:cm_sources_override = {
-      \ 'cm-tags': {'enable':0}
-      \ }
-  let g:cm_complete_start_delay = 50 " to improve response time while typing
-  let g:cm_complete_popup_delay = 50 " default value
-  " --- LanguageClient LSP ---
-  let g:LanguageClient_serverStderr = '/tmp/clangd.stderr'
-  let g:LanguageClient_serverCommands = {
-  \ 'rust': ['rls'],
-  \ 'cpp': ['clangd','--background-index=0','--header-insertion=never','--log=verbose'],
-  \ 'c':   ['clangd','--background-index=0','--header-insertion=never','--log=verbose'],
-  \ }
-  " for python, use the ncm2-jedi plugin instead of the language server (disable the language client for python)
-  call ncm2#override_source('LanguageClient_python', {'enable': 0})
-  " mappings
-  nmap <leader>c :call LanguageClient_contextMenu()<CR>
-  set completefunc=LanguageClient#complete
-  set formatexpr=LanguageClient_textDocument_rangeFormatting()
-  let g:startify_custom_footer =
-         \ ['', "   --- using ncm2  ---  ", '']
+         \ ['', "   --- using vim-cmp  ---  ", '']
 else
   let g:startify_custom_footer =
          \ ['', "   --- code-completion disabled ---  ", '']
 endif
-" --- SuperTab ---
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " tcomment
 " disable default mappings and only map the minimum
@@ -335,19 +298,22 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)"
 
-" TagBar
-nmap <F8> :TagbarToggle<CR>
-
+ 
 " UndoTree
 map <F6> :UndotreeToggle<CR>
+
+" """""""""""""""""""" "
+"    Neovim specific   "
+" """""""""""""""""""" "
+if has("nvim")
+  runtime completion.lua
+endif
 
 " """""""""""""""""""" "
 " small customizations "
 " """""""""""""""""""" "
 
 " custom filetype associations
-autocmd BufNewFile,BufRead *.nionet  set filetype=yaml
-autocmd BufNewFile,BufRead *.nnmsg   set filetype=yaml
 " autocmd BufNewFile,BufRead *.h       set filetype=cpp
 
 " Removes trailing spaces
@@ -358,17 +324,19 @@ endfunction
 map <F2> :call TrimWhiteSpace()<CR>
 
 " Toggle LanguageClient
-function ToggleLanguageClient()
-    if g:LanguageClientEnabled
-        LanguageClientStop
-        let g:LanguageClientEnabled = 0
-    else
-        LanguageClientStart
-        let g:LanguageClientEnabled = 1
-  endif
-endfunction
-let g:LanguageClientEnabled = 1
-map <F3> :call ToggleLanguageClient()<CR>
+if has("nvim")
+    function ToggleLanguageClient()
+        if g:LanguageClientEnabled
+            LspStop
+            let g:LanguageClientEnabled = 0
+        else
+            LspStart
+            let g:LanguageClientEnabled = 1
+      endif
+    endfunction
+    let g:LanguageClientEnabled = 1
+    map <F3> :call ToggleLanguageClient()<CR>
+endif
 
 " """" "
 " misc "
