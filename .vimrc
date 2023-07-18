@@ -221,8 +221,8 @@ nnoremap <leader>bf :NERDTreeFind<CR>
 """""""""""
 " PLUGINS "
 """""""""""
-" " pear-tree
-" let g:pear_tree_repeatable_expand = 0
+" pear-tree
+let g:pear_tree_repeatable_expand = 0
 
 " --- NERDTree ---
 " Open/close NERDTree with ,t or F7

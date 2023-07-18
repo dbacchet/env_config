@@ -64,6 +64,17 @@ terminal without a title bar in Ubuntu 20.04
 use the instructions here: https://github.com/pixel-saver/pixel-saver
 
 
+MacOS faster key repeat
+-----------------------
+In a terminal:
+```
+defaults write -g InitialKeyRepeat -int 25
+defaults write -g KeyRepeat -int 1
+```
+it will set the initial key repeat to 375ms and the key repeat rate to 15ms (faster than the max speed in the system preferences).
+It will require a restart or logout/login
+
+
 How to Fix the Home and End Buttons for an External Keyboard in Mac
 -------------------------------------------------------------------
 
