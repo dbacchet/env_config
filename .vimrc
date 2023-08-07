@@ -313,6 +313,9 @@ endif
 " small customizations "
 " """""""""""""""""""" "
 
+" stop inserting a comment on newline if the current line has a comment
+autocmd FileType c,cpp setlocal formatoptions-=r
+
 " custom filetype associations
 " autocmd BufNewFile,BufRead *.h       set filetype=cpp
 

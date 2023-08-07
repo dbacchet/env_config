@@ -31,23 +31,29 @@ cmp.setup({
 })
 -- Use TAB/S-TAB to navigate the completion list
 cmp.setup {
-    mapping = {
-      ['<Tab>'] = function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        else
-          fallback()
-        end
-      end,
-      ['<S-Tab>'] = function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        else
-          fallback()
-        end
-      end,
-    }
+  mapping = {
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end,
+    ['<S-Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end,
   }
+}
+
+-- force-disable preselect (to avoiid a LSP to preselect a candidate)
+cmp.setup {
+  preselect = cmp.PreselectMode.None
+}
+
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
   sources = cmp.config.sources({
@@ -88,6 +94,9 @@ require('lspconfig')['clangd'].setup {
   capabilities = capabilities
 }
 require('lspconfig')['lua_ls'].setup {
+  capabilities = capabilities
+}
+require('lspconfig')['rust_analyzer'].setup {
   capabilities = capabilities
 }
 

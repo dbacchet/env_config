@@ -110,3 +110,17 @@ If you want to fix the “Home” and “End” buttons, here is a quick tip to 
 }
 ```
 4. Save and restart your Mac. The “Home” and “End” should be working now, and you can use it in conjunction with the “Shift” and “Ctrl” modifier buttons.
+
+
+How to level volume of mp3s with mp3gain
+----------------------------------------
+
+first perform an analysis and level the volume to prevent clipping; all files will have a similar/same perceived volume.
+```
+mp3gain -r -k *.mp3
+```
+(optional) then you can increase/decrease the volume by a few decibels by:
+```
+mp3gain -r -k -g 3 *.mp3
+```
+(the example above increases by 3 decibels)
